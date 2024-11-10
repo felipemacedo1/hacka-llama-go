@@ -1,0 +1,85 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table users {
+  id integer [primary key]
+  email varchar
+  password varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table users_answers {
+  id integer [primary key]
+  user_id integer
+  question_id integer
+  answer_id integer
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table tests {
+  id integer [primary key]
+  title varchar
+  description varchar
+  institution integer
+  subject string
+  date datetime
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table questions {
+    id integer [primary key]
+  test_id integer
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table image_questions {
+  id integer [primary key]
+  question_id integer
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table answers {
+    id integer [primary key]
+question_id integer
+correct bool
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table classes {
+    id integer [primary key]
+user_id integer
+content bool
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table class_questions {
+    id integer [primary key]
+  class_id integer
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table class_answers {
+    id integer [primary key]
+class_question_id integer
+correct bool
+  created_at timestamp
+  updated_at timestamp
+}
+
+
+Ref: "image_questions"."question_id" > "questions"."id"
+Ref: "questions"."test_id" > "tests"."id"
+Ref: "answers"."question_id" < "questions"."id"
+Ref: "users_answers"."user_id" < "users"."id"
+Ref: "users_answers"."question_id" < "questions"."id"
+Ref: "users_answers"."answer_id" < "answers"."id"
+Ref: "classes"."user_id" < "users"."id"
+Ref: "class_answers"."class_question_id" < "class_questions"."id"
